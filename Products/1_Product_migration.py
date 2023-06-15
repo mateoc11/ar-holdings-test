@@ -1,7 +1,7 @@
 ## Script to migrate the products from csv files to a SQL Server Database
 import pandas as pd
 from db_conn import open_dbConnMSSQL
-
+import Keys
 
 ##Creation of the products table
 
@@ -37,4 +37,9 @@ def migrateProducts(route:str,server:str,db:str,user:str,pwd:str,pk_column:str =
 
 
 ##Execute the migration
-print(migrateProducts("./Data/sample_data.csv","LAPTOP-M8D05K6L\SQLEXPRESS","ar_holdings","mateoc","test1234",create_pk=True))
+print(migrateProducts("./Data/sample_data.csv",
+                      "LAPTOP-M8D05K6L\SQLEXPRESS",
+                      "ar_holdings",
+                      Keys.sql_user,
+                      Keys.sql_pwd,
+                      create_pk=True))
