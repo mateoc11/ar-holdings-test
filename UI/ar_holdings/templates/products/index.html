@@ -1,0 +1,23 @@
+{% extends '../layout.html' %}
+{% block page-title %}inicio{% endblock %}
+{% load static %}
+{% block content %}
+<body style="background-color: #0750a4;">
+    <div class="container d-flex align-items-center justify-content-center" style="height: 100vh;">
+        <div class="text-center">
+            <img src="{% static 'images/logo.png' %}" alt="ar-holdings-loog" width="60%">
+            <br><br>
+            <span class="subtitle white">Consulta de artículos</span><br>
+            <span class="text white">Inserte el SKU que desea consultar</span><br><br><br>
+            <form  action="findProduct/" class="d-flex justify-content-center" id="SKU" method="POST">
+                {% csrf_token %} 
+                <input type="text" name="SKU" id="SKU" class="form-control align-items-center" placeholder="SKU" 
+                style="width: 332px;height: 52px;">  
+            </form><br>
+            <button type="submit" form="SKU" class="btn btn-light button-text" style="border-radius: 50px;width: 190px;height: 60px;">
+                <i class='fa-solid fa-magnifying-glass'></i> Buscar
+            </button>
+        </div>
+    </div>
+</body>
+{% endblock %}

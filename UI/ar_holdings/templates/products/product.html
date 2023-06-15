@@ -1,0 +1,54 @@
+{% extends '../layout.html' %}
+{% block page-title %}Producto{% endblock %}
+{% load static %}
+{% block content %}
+<body>
+    <nav class="navbar navbar-custom">
+        <div class="container-fluid" style="background-color: #0750a4;">
+            <a class="navbar-brand" href="#">
+            <img src="{% static 'images/logo.png' %}"  alt="" width="258px" height="64px" class="d-inline-block align-text-top">
+            </a>
+        </div>
+    </nav>
+    <br><br>
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col">
+                <div class="d-flex">
+                    {% if images|length == 1 %}
+                        <div><img
+                            src="{{images.0}}"
+                            class=" rounded mb-4"
+                            width="406px" height="503px"
+                        /></div>
+                    {% else %}
+                        {% for image in images %}
+                            {% if forloop.first %}
+                                <div class="p-1"><img
+                                    src="{{image}}"
+                                    class="rounded mb-3"
+                                    width="406px" height="503px"
+                                /></div>
+                                <div class="p-2">
+                            {% else %}
+                                <img
+                                src="{{image}}"
+                                class="rounded border mb-3"
+                                width="128px" height="159px"
+                                />
+                                <br>
+                            {% endif %}
+                            
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col">
+                <span class="product-title"><b>{{product.0.Name}}</b></span>
+                <span class="product-desc">{{product.0.description |safe}}</span>
+            </div>
+          </div>
+        </div>
+</body>
+{% endblock %}

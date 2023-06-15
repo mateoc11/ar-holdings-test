@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block page-title %}{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %} 
+    <script src="https://kit.fontawesome.com/8ec07cbd02.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    .subtitle{
+        font-family: Helvetica;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 500;
+        font-size: 25px;
+        line-height: 40px;
+    }
+
+    .white{
+        color: white;
+    }
+
+    .text{
+        font-family: Helvetica;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: normal;
+        font-size: 19px;
+        line-height: 23px;
+    }
+
+    .button-text{
+        font-family:Helvetica;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: normal;
+        font-size: 22px;
+        line-height: 27px;
+    }
+
+    .navbar-custom {
+        background-color: #0750a4;
+    }
+
+    .product-title{
+        font-family:Helvetica;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 59px;
+    }
+
+    .product-desc{
+        font-family:Helvetica;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+</style>
+{% block content %}
+
+{% endblock %}
+</html>
