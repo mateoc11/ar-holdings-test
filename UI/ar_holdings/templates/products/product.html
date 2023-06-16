@@ -50,6 +50,12 @@
                 <span class="product-title"><b>{{product.0.Name}}</b></span>
                 <span class="product-desc">{{product.0.description |safe}}</span>
                 <span class="product-price"><b>$ {{product.0.Regular_price}}</b></span>
+                {% if colors != '' %}
+                    <br><br>
+                    {% for color in colors %}
+                        <button class="btn btn-dark btn-lg" {{color |safe}}></button>
+                    {% endfor %}
+                {% endif %}
             </div>
           </div>
         </div>
