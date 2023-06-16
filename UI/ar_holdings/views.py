@@ -17,21 +17,33 @@ def findProduct(request):
     if request.method == 'POST':  
         sku = request.POST['SKU']
         products = Products.objects.filter(SKU__contains=f'{sku}').order_by('-ID')
-        colors = ""
+        ##colors = ""
+        colors = []
+        images = ""
 
+        ##Slower metod but fixes the case on edge case WSH12
         for product in products:
-            images = product.Images
-            if product.Type == 'variable':
-                colors = product.Attribute_2_value.split('|')
-            break
-        
+
+            ##Get the images of the variable SKU that will be the first one
+            if images == "":
+                images = product.Images
+
+            ##Get the colors oyt of the variants by going through them
+            if product.Type == 'variation' and '|' not in product.Attribute_2_value:
+
+                ##If color not already append then append it
+                if product.Attribute_2_value not in colors:
+                    colors.append(product.Attribute_2_value)
+
+
         color_stylings= []
         
+        ##Create the style for every button and add the JS function too
         for color in colors:
             color_stylings.append(f'''style="background-color: {color.lower()} !important;
                                       border-radius:55px;
                                       height: 35px;
-                                      margin-left:10px;"''')
+                                      margin-left:10px;" onclick="changeImg('{color.lower()}')"''')
 
         return render(
         request,

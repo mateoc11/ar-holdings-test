@@ -13,14 +13,14 @@
     <br>
     <a href="{% url 'index' %}" class="back-button float-end"><i class="fa-solid fa-angle-left"></i> <b>Regresar</b></a>
     <br><br>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row align-items-start">
             <div class="col">
-                <div class="d-flex">
+                <div class="d-flex flex-sm-row flex-column">
                     {% if images|length == 1 %}
                         <div><img
                             src="{{images.0}}"
-                            class=" rounded mb-4"
+                            class="mb-4"
                             width="406px" height="503px"
                         /></div>
                     {% else %}
@@ -30,15 +30,15 @@
                                     src="{{image}}"
                                     class="rounded mb-3"
                                     width="406px" height="503px"
-                                /></div>
+                                    id="img{{ forloop.counter }}"/></div>
                                 <div class="p-2">
                             {% else %}
                                 <img
                                 src="{{image}}"
                                 class="rounded border mb-3"
                                 width="128px" height="159px"
-                                />
-                                <br>
+                                id="img{{ forloop.counter }}"/>
+                                
                             {% endif %}
                             
                         {% endfor %}
@@ -53,11 +53,35 @@
                 {% if colors != '' %}
                     <br><br>
                     {% for color in colors %}
-                        <button class="btn btn-dark btn-lg" {{color |safe}}></button>
+                        <button class="btn btn-dark btn-lg" {{color |safe}} onclick="changeImg('red')"></button>
                     {% endfor %}
                 {% endif %}
             </div>
           </div>
         </div>
 </body>
+<script>
+
+    //Function to change the image depending on the clicked color
+    function changeImg(color){
+        //Get the current img source
+        original_src = document.getElementById("img1").src
+
+        //Get the abosulute path but no the file
+        file_url = original_src.split('/').slice(0, -1).join('/')
+
+        //Get only the file
+        file_sku = original_src.split('/').at(-1).split('-')[0];
+
+        //Change the file for the new color
+        file_extension = original_src.split('/').at(-1).split('.').at(-1);
+
+        //Build the new src
+        new_src=`${file_url}/${file_sku}-${color}_main.${file_extension}`
+
+        //Set the new source for the main image
+        document.getElementById("img1").src=new_src;
+    }
+
+</script>
 {% endblock %}
