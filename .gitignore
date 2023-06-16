@@ -4,3 +4,4 @@
 # API Credentials
 Products/Keys.py
 secrets.json
+Products/__pycache__

@@ -1,6 +1,7 @@
 ## Script to migrate the products from csv files to a SQL Server Database
 import pandas as pd
-from db_conn import open_dbConnMSSQL
+import numpy as np
+from connections import open_dbConnMSSQL
 import Keys
 
 ##Creation of the products table
@@ -14,16 +15,17 @@ def migrateProducts(route:str,server:str,db:str,user:str,pwd:str,pk_column:str =
         ##Open the connection to the database
         conn = open_dbConnMSSQL(server,db,user,pwd)
 
+        ##add the sync column to the df
+        df['synchronized_at ']= np.nan
+
         ##Migrate the data to the sql database
         df.to_sql("Products",conn,index=False,index_label=f"{pk_column}",if_exists='append')
-        
-        ## if the pk is not already defined create it if create_pk is True
-        if create_pk:
-            ##Make the pk column not null to avoid errors
-            conn.execute(f"ALTER TABLE Products ALTER COLUMN {pk_column} bigint NOT NULL;")
 
-            ##Make the columnd the primary key
-            conn.execute(f"ALTER TABLE Products ADD PRIMARY KEY ({pk_column});")
+        ##check if the sync column is already there, if not, create it
+        try:
+            pd.read_sql_query('SELECT TOP(1) synchronized FROM Products',conn)
+        except:
+            conn.execute(f"ALTER TABLE Products ADD synchronized_at DATETIME")
 
         ##Close the connection
         conn.close()
