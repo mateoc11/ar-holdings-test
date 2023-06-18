@@ -107,7 +107,7 @@ def publish_Products(sql_conn,shopify_session):
 
             ##After saving update the sync column to current time for the product and his variants
             conn.execute(f'''UPDATE Products set synchronized_at = '{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
-                        WHERE SKU like '{SKU}%' ''')
+                             WHERE SKU like '{SKU}%' ''')
 
             ##Get the location of the store to be able to update the inventory later
             location = shopify.Location.find_first()

@@ -30,7 +30,7 @@ def migrateProducts(route:str,server:str,db:str,user:str,pwd:str,pk_column:str =
         conn = open_dbConnMSSQL(server,db,user,pwd)
 
         ##add the sync column to the df
-        df['synchronized_at ']= np.nan
+        df['synchronized_at']= np.nan
 
         ##Migrate the data to the sql database
         df.to_sql("Products",conn,index=False,index_label=f"{pk_column}",if_exists='append')
