@@ -17,6 +17,7 @@
         <div class="row align-items-start">
             <div class="col">
                 <div class="d-flex flex-sm-row flex-column">
+                    <!-- If theres only 1 image then  show it else loop through them-->
                     {% if images|length == 1 %}
                         <div><img
                             src="{{images.0}}"
@@ -50,10 +51,11 @@
                 <span class="product-title"><b>{{product.0.Name}}</b></span>
                 <span class="product-desc">{{product.0.description |safe}}</span>
                 <span class="product-price"><b>$ {{product.0.Regular_price}}</b></span>
+                <!-- Create color picker if there is more than one color-->
                 {% if colors != '' %}
                     <br><br>
                     {% for color in colors %}
-                        <button class="btn btn-dark btn-lg" {{color |safe}} onclick="changeImg('red')"></button>
+                        <button class="btn btn-dark btn-lg" {{color |safe}}></button>
                     {% endfor %}
                 {% endif %}
             </div>

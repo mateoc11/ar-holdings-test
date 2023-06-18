@@ -11,6 +11,16 @@ sql_conn = open_dbConnMSSQL("LAPTOP-M8D05K6L\SQLEXPRESS","ar_holdings",Keys.sql_
 shopify_session = shopify_connect(Keys.api_key,Keys.secret,Keys.shop_url,'2023-04',Keys.access_token)
 
 def publish_Products(sql_conn,shopify_session):
+    """Function to publish products from the SQL Server table to a Shopify Store.
+
+    Args:
+        sql_conn : this is the sqlalchemy connection to the SQL Server DB.
+        shopify_session: this is the shopify session of the store using the API. 
+    Returns:
+        None
+
+    """ 
+    
     try:
         ##Connect to shopify
         session = shopify_session

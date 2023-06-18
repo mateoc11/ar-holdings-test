@@ -4,6 +4,18 @@ from connections import shopify_connect
 
 
 def create_Webhook(shopify_session,topic:str,address:str,r_format:str):
+    """Function to create a Webhook of a Shopify Store.
+
+    Args:
+        shopify_session: this is the shopify session of the store using the API. 
+        topic (str): this the event that triggers the webhook. (check docs for allowed topics)
+        address (str): this is the endpoint address to which the webhook should send the POST request
+        r_format (str): this is the format in which the webhook subscription should send the data.
+    Returns:
+        None
+
+    """ 
+    
     try:
 
         session = shopify_session
