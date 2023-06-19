@@ -5,13 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block page-title %}{% endblock %}</title>
     {% load bootstrap5 %}
+    {% load static %}
     {% bootstrap_css %}
     {% bootstrap_javascript %} 
     <script src="https://kit.fontawesome.com/8ec07cbd02.js" crossorigin="anonymous"></script>
 </head>
 <style>
+
+    @font-face {
+        font-family: "Helvetica Neue";
+        src: url("{% static 'fonts/HelveticaNeueRoman.otf' %}") format("truetype");
+    }
+
     .subtitle{
-        font-family: Helvetica;
+        font-family: 'Helvetica Neue';
         font-style: normal;
         font-variant: normal;
         font-weight: 500;
@@ -24,7 +31,7 @@
     }
 
     .text{
-        font-family: Helvetica;
+        font-family: 'Helvetica Neue';
         font-style: normal;
         font-variant: normal;
         font-weight: normal;
@@ -33,7 +40,7 @@
     }
 
     .button-text{
-        font-family:Helvetica;
+        font-family:'Helvetica Neue';
         font-style: normal;
         font-variant: normal;
         font-weight: normal;
@@ -46,7 +53,7 @@
     }
 
     .product-title{
-        font-family:Helvetica;
+        font-family:'Helvetica Neue';
         font-style: normal;
         font-variant: normal;
         font-weight: 500;
@@ -55,7 +62,7 @@
     }
 
     .product-desc{
-        font-family:Helvetica;
+        font-family:'Helvetica Neue';
         font-style: normal;
         font-variant: normal;
         font-weight: normal;
@@ -65,7 +72,7 @@
     }
 
     .product-price{
-        font-family:Helvetica;
+        font-family:'Helvetica Neue';
         font-style: normal;
         font-variant: normal;
         font-weight: 500;
@@ -74,10 +81,7 @@
     }
 
     .back-button{
-        font-family:Helvetica;
-        font-style: normal;
-        font-variant: normal;
-        font-weight: 500;
+        font-family:'Helvetica Neue';
         font-size: 24px;
         line-height: 29px;
         text-decoration: none;

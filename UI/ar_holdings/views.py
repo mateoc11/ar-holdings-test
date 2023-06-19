@@ -21,6 +21,9 @@ def findProduct(request):
         colors = []
         images = ""
 
+        if not products:
+            return redirect('index')
+
         ##Slower metod but fixes the case on edge case WSH12
         for product in products:
 

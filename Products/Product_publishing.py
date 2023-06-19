@@ -32,8 +32,8 @@ def publishProducts(sql_conn,shopify_session):
 
 
         ##For every type of product we create a smart collection that will detect the tags of the products
-        for cloth_type in categories:
-            shopify.SmartCollection.create({'title': f'{cloth_type}', 'rules': [{'column': 'tag', 'relation': 'equals', 'condition': f'{cloth_type}'}]})
+        for clothe_type in categories:
+            shopify.SmartCollection.create({'title': f'{clothe_type}', 'rules': [{'column': 'tag', 'relation': 'equals', 'condition': f'{clothe_type}'}]})
 
 
         ## Now we extract all the product info on the parent or simple items
