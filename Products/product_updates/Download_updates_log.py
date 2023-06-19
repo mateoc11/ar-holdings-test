@@ -20,7 +20,6 @@ try:
     ## then write the contents of the right blob using the download_blob method
     with open(file=download_file_path, mode="wb") as download_file:
         download_file.write(container_client.download_blob("updates.log").readall())
-
+        
 except Exception as e:
-    
-    print(str)(e)
+    print(e)
