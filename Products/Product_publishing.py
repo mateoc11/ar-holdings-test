@@ -4,12 +4,13 @@ from datetime import datetime
 
 
 
-def publishProducts(sql_conn,shopify_session):
+def publishProducts(sql_conn,shopify_session,create_collections:bool = False):
     """Function to publish products from the SQL Server table to a Shopify Store.
 
     Args:
         sql_conn : this is the sqlalchemy connection to the SQL Server DB.
         shopify_session: this is the shopify session of the store using the API. 
+        create_collections (bool): this is specifies if the user wants to create clothe type collections or not.
     Returns:
         None
 
@@ -23,17 +24,19 @@ def publishProducts(sql_conn,shopify_session):
         ##activate the session
         shopify.ShopifyResource.activate_session(session)
 
-        ##make a query to extrach the diffetent types of products
-        df = pd.read_sql_query("SELECT DISTINCT(Categories) FROM Products",conn)
 
-    
-        ##Split the strings and drop the duplicates to have only the required values
-        categories = df['Categories'].apply(lambda x: x.split('|')[0].split('>')[-1]).T.drop_duplicates().values
+        if create_collections:
+            ##make a query to extrach the diffetent types of products
+            df = pd.read_sql_query("SELECT DISTINCT(Categories) FROM Products",conn)
+
+        
+            ##Split the strings and drop the duplicates to have only the required values
+            categories = df['Categories'].apply(lambda x: x.split('|')[0].split('>')[-1]).T.drop_duplicates().values
 
 
-        ##For every type of product we create a smart collection that will detect the tags of the products
-        for clothe_type in categories:
-            shopify.SmartCollection.create({'title': f'{clothe_type}', 'rules': [{'column': 'tag', 'relation': 'equals', 'condition': f'{clothe_type}'}]})
+            ##For every type of product we create a smart collection that will detect the tags of the products
+            for clothe_type in categories:
+                shopify.SmartCollection.create({'title': f'{clothe_type}', 'rules': [{'column': 'tag', 'relation': 'equals', 'condition': f'{clothe_type}'}]})
 
 
         ## Now we extract all the product info on the parent or simple items
