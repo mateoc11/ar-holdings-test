@@ -1,9 +1,8 @@
 import shopify
-import Keys
-from connections import shopify_connect
 
 
-def create_Webhook(shopify_session,topic:str,address:str,r_format:str):
+
+def createWebhook(shopify_session,topic:str,address:str,r_format:str):
     """Function to create a Webhook of a Shopify Store.
 
     Args:
@@ -28,15 +27,11 @@ def create_Webhook(shopify_session,topic:str,address:str,r_format:str):
                             "address": address,
                             "format":r_format})
 
+
+        print("Succesfully created the Webhook of the Shopify store")
         ##Close session
         shopify.ShopifyResource.clear_session()
 
     except Exception as e:
         
-        print(str)(e)
-
-##Get the shopify session
-shopify_session = shopify_connect(Keys.api_key,Keys.secret,Keys.shop_url,'2023-04',Keys.access_token)
-
-##create webhhook
-create_Webhook(shopify_session,"products/update","https://azla-webhook-mcgstore.azurewebsites.net:443/api/logs-products-updates/triggers/When_a_HTTP_request_is_received/invoke?api-version=2022-05-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=iqIfnLLVzC0BESfqYEWP0Vd57BtyxE1YWxziec5Qrgg","json")
+        print(e)

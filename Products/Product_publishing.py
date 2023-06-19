@@ -1,16 +1,10 @@
 import shopify
-from connections import open_dbConnMSSQL,shopify_connect
 import pandas as pd
 from datetime import datetime
-import Keys
 
-##open the connection to the SQL Server DB
-sql_conn = open_dbConnMSSQL("LAPTOP-M8D05K6L\SQLEXPRESS","ar_holdings",Keys.sql_user,Keys.sql_pwd)
 
-##Get the shopify session
-shopify_session = shopify_connect(Keys.api_key,Keys.secret,Keys.shop_url,'2023-04',Keys.access_token)
 
-def publish_Products(sql_conn,shopify_session):
+def publishProducts(sql_conn,shopify_session):
     """Function to publish products from the SQL Server table to a Shopify Store.
 
     Args:
@@ -32,6 +26,7 @@ def publish_Products(sql_conn,shopify_session):
         ##make a query to extrach the diffetent types of products
         df = pd.read_sql_query("SELECT DISTINCT(Categories) FROM Products",conn)
 
+    
         ##Split the strings and drop the duplicates to have only the required values
         categories = df['Categories'].apply(lambda x: x.split('|')[0].split('>')[-1]).T.drop_duplicates().values
 
@@ -42,7 +37,7 @@ def publish_Products(sql_conn,shopify_session):
 
 
         ## Now we extract all the product info on the parent or simple items
-        parents = pd.read_sql_query("SELECT * FROM Products WHERE Parent is NULL",conn)
+        parents = pd.read_sql_query("SELECT * FROM Products WHERE Parent is NULL and synchronized_at is NULL",conn)
 
         ## For every parent we search his variants, add the required information, and link the images
         for SKU in parents['SKU'].values:
@@ -106,8 +101,7 @@ def publish_Products(sql_conn,shopify_session):
             sucess = product.save() 
 
             ##After saving update the sync column to current time for the product and his variants
-            conn.execute(f'''UPDATE Products set synchronized_at = '{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
-                             WHERE SKU like '{SKU}%' ''')
+            conn.execute(f'''UPDATE Products set synchronized_at = '{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}' WHERE SKU like '{SKU}%' ''')
 
             ##Get the location of the store to be able to update the inventory later
             location = shopify.Location.find_first()
@@ -130,11 +124,8 @@ def publish_Products(sql_conn,shopify_session):
 
 
 
-
+        print("Succesfully published the Products to the Shopify store")
         shopify.ShopifyResource.clear_session()
 
     except Exception as e:
-        print(str)(e)
-
-##Execution
-publish_Products(sql_conn,shopify_session)
+        print(e)

@@ -3,5 +3,6 @@
 
 # API Credentials
 Products/Keys.py
+Products/product_updates/Token.py
 secrets.json
 Products/__pycache__

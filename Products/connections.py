@@ -5,7 +5,7 @@ import shopify
 
 
 ## Function to open the connection to my SQL Server database
-def open_dbConnMSSQL(server:str,db:str,user:str,password:str,port:str = '3306',driver:str = 'ODBC Driver 17 for SQL Server'):
+def opendbConnMSSQL(server:str,db:str,user:str,password:str,port:str = '3306',driver:str = 'ODBC Driver 17 for SQL Server'):
     """Function to connect to a Sql Server Database.
 
     Args:
@@ -21,15 +21,13 @@ def open_dbConnMSSQL(server:str,db:str,user:str,password:str,port:str = '3306',d
     """ 
     ##Prepare the engine
     engine = sqlalchemy.create_engine(rf"mssql+pyodbc://{user}:{password}@{server}/{db}?driver={driver.replace(' ','+')}")
-    
-    ##Connect to the db
-    conn = engine.connect()
+
 
     ##Return the connection
-    return conn
+    return engine
 
 
-def shopify_connect(api_key:str,api_secret:str,shop_url:str,api_version:str,acces_token:str):
+def shopifyConnect(api_key:str,api_secret:str,shop_url:str,api_version:str,acces_token:str):
     """Function to connect to a Shopify Store through the API.
 
     Args:
