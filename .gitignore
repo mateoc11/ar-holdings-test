@@ -1,8 +1,12 @@
 # Specifies intentionally untracked files to ignore when using Git
 
 
-# API Credentials
-Products/Keys.py
-Products/product_updates/Token.py
+
+V1/Products/Keys.py
+V1/Products/product_updates/Token.py
 secrets.json
-Products/__pycache__
+V1/Products/__pycache__
+
+V2/Products/Keys.py
+V2/Products/product_updates/Token.py
+V2/Products/__pycache__
