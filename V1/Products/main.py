@@ -17,8 +17,8 @@ shopify_session = shopifyConnect(Keys.api_key,Keys.secret,Keys.shop_url,'2023-04
 ##Execute the migration
 migrateProducts("./Data/sample_data.csv",conn,create_pk=True)
 
-'''##Publish the produts on the shopify store
+##Publish the produts on the shopify store
 publishProducts(conn,shopify_session,True)
 
 ##Create the webhook
-createWebhook(shopify_session,"products/update",Keys.endpoint,"json")'''
+createWebhook(shopify_session,"products/update",Keys.endpoint,"json")
