@@ -18,6 +18,7 @@ def publishProducts(sql_conn,access_token:str,shop_url:str,create_collections:bo
     """ 
 
     conn = sql_conn
+    ##required headers for post request
     headers = {"Content-Type":"application/json","X-Shopify-Access-Token": f'{access_token}'}
 
     try:
@@ -36,7 +37,7 @@ def publishProducts(sql_conn,access_token:str,shop_url:str,create_collections:bo
                 collection = {"smart_collection":{"title":f'{clothe_type}',"rules":[{"column":"tag","relation":"equals","condition":f'{clothe_type}'}]}}
                 
                 ##specify url of the smartcollection endpoint
-                post_url = f"{shop_url}/admin/api/2023-04/smart_collections.json"
+                post_url = f"/{shop_url}admin/api/2023-04/smart_collections.json"
 
                 ##Send the request
                 r = requests.post(post_url, data=json.dumps(collection), headers=headers)
@@ -52,7 +53,7 @@ def publishProducts(sql_conn,access_token:str,shop_url:str,create_collections:bo
             ##Query to extract all the variants
             df = pd.read_sql_query(f"SELECT * FROM Products WHERE SKU LIKE '{SKU}%' ORDER BY ID DESC",conn)
 
-            ##Initialize product
+            ##Initialize product JSON
             product = {"product":{}}
             
             ##Edge case validation for products that have a different name estructure
@@ -99,10 +100,10 @@ def publishProducts(sql_conn,access_token:str,shop_url:str,create_collections:bo
                 variant['inventory_management']  = 'shopify'
                 product['product']['variants'].append(variant)
             
-            ## save the completed product
+            ## build the required URL
             post_url = f"{shop_url}/admin/api/2023-04/products.json"
 
-            ##Get the created product
+            ##Create and Get the created product
             r = requests.post(post_url, data=json.dumps(product), headers=headers)
 
             ##After saving update the sync column to current time for the product and his variants

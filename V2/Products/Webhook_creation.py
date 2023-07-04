@@ -16,19 +16,21 @@ def createWebhook(shop_url:str,access_token:str,topic:str,address:str,r_format:s
     """ 
     
     try:
+        ##Required headers for post request
         headers = {"Content-Type":"application/json","X-Shopify-Access-Token": f'{access_token}'}
 
+        ##built the webhook JSON
         webhook_json ={"webhook":{}}
         webhook_json["webhook"]['address'] = address
         webhook_json["webhook"]['topic'] = topic
         webhook_json["webhook"]['format'] = r_format
 
-        ##activate the session
-        r = requests.post(f'{shop_url}/admin/api/2022-04/webhooks.json', data=json.dumps(webhook_json), headers=headers)
+        ##send the request
+        r = requests.post(f'{shop_url}/admin/api/2023-04/webhooks.json', data=json.dumps(webhook_json), headers=headers)
 
-
+        ##Print Webhook
         print(r.json())
-        ##Create the webhook on products updates and specify endpoint from azure
+        
         return r
 
 
